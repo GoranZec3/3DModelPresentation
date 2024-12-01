@@ -15,7 +15,7 @@ export  class Scene{
         // this.camera.position.x = -5;
         this.camera.position.set(-3, 3, 3);
 
-        this.renderer = new THREE.WebGLRenderer({canvas});
+        this.renderer = new THREE.WebGLRenderer({canvas, antialias: true, powerPreference: "high-performance"});
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
