@@ -4,7 +4,7 @@ import { Scene } from './scene.js';
 
 // const hdriPath = '/hdri/studio011small.hdr';
 const hdriPath = '/hdri/pine_attic_1k.hdr';
-const modelPath = '/model/cardboard_box_5.glb';
+const modelPath = '/model/cardboard_box_5_2.glb';
 const canvas = document.getElementById('canvas');
 const mainScene = new Scene(canvas, hdriPath, modelPath);
 mainScene.modelLoader.addAnnotation('open', new THREE.Vector3(0, 1.5, 0), '/icon/unboxing.png');
