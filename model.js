@@ -40,6 +40,9 @@ export class ModelLoader {
                         (gltf) => {
                             this.model = gltf.scene;
                             this.scene.add(this.model);
+
+                            document.getElementById('loading-screen').style.display = 'none';
+                            document.getElementById('canvas').style.display = 'block';
                             console.log('Model loaded and reversed successfully.');
                             // Clean up the URL object after loading
                             URL.revokeObjectURL(revertedUrl);
