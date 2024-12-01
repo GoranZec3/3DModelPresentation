@@ -89,61 +89,20 @@ export class ModelLoader {
         clip = clip || this.animations[0];
     
         if (clip) {
-            const action = this.mixer.clipAction(clip);
-            
+            const action = this.mixer.clipAction(clip);   
             // Ensure previous action is stopped and reset
             this.mixer.stopAllAction();
     
             // Reset the animation action
             action.reset();
     
-            // Set the loop type and other properties
             action.setLoop(THREE.LoopOnce); // Play only once
             action.clampWhenFinished = true; // Freeze at the last frame
     
             // Play the animation
             action.play();
-    
-            // Listen for when the animation ends
-            action.onFinished = () => {
-                // Explicitly set the time to the last frame
-                action.time = clip.duration;
-                action.paused = true;  // Pause the animation to freeze at the last frame
-            };
         }
     }
-
-    // playAnimation(animationName = null) {
-    //     if (!this.mixer || this.animations.length === 0) {
-    //         console.warn('No animations available to play.');
-    //         return;
-    //     }
-    
-    //     let clip;
-    
-    //     if (animationName) {
-    //         clip = this.animations.find((clip) => clip.name === animationName);
-    //         if (!clip) {
-    //             console.warn(`Animation "${animationName}" not found. Defaulting to the first animation.`);
-    //         }
-    //     }
-    
-    //     // Default to the first animation if no name is provided or if the specified name doesn't exist
-    //     clip = clip || this.animations[0];
-        
-    
-    //     if (clip) {
-    //         const action = this.mixer.clipAction(clip);
-    //         action.reset(); 
-    //         action.play();  
-    //         action.clampWhenFinished = true;
-    //         action.setLoop(THREE.LoopOnce);
-    //         console.log(clip)
-   
-    //     }
-    // }
-
-
 
 
     //no decoding process
