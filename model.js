@@ -99,7 +99,6 @@ export class ModelLoader {
             action.setLoop(THREE.LoopOnce); // Play only once
             action.clampWhenFinished = true; // Freeze at the last frame
     
-            // Play the animation
             action.play();
         }
     }

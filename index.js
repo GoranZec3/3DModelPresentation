@@ -26,7 +26,7 @@ mainScene.modelLoader.triggerInteraction('close', () => {
     mainScene.modelLoader.setAnnotationVisibility('close', false);
     setTimeout(()=>{
         mainScene.modelLoader.setAnnotationVisibility('open', true);
-    }, 2300);
+    }, 2400);
     
 })
 
