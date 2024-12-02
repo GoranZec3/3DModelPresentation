@@ -19,6 +19,7 @@ export  class Scene{
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.toneMappingExposure = 0.85;
         
 
