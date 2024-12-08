@@ -69,81 +69,53 @@ export class ModelLoader {
         }
     }
 
-
-    playAnimation(animationName = null) {
-        if (!this.mixer || this.animations.length === 0) {
-            console.warn('No animations available to play.');
-            return;
-        }
-    
-        let clip;
-    
-        // Find animation by name or default to the first
-        if (animationName) {
-            clip = this.animations.find((clip) => clip.name === animationName);
-            if (!clip) {
-                console.warn(`Animation "${animationName}" not found. Defaulting to the first animation.`);
-            }
-        }
-    
-        clip = clip || this.animations[0];
-    
-        if (clip) {
-            const action = this.mixer.clipAction(clip);   
-            // Ensure previous action is stopped and reset
-            this.mixer.stopAllAction();
-    
-            // Reset the animation action
-            action.reset();
-    
-            action.setLoop(THREE.LoopOnce); // Play only once
-            action.clampWhenFinished = true; // Freeze at the last frame
-    
-            action.play();
-        }
-    }
-
-
-    //no decoding process
-    // loadModel(modelPath) {
-    //     return new Promise((resolve, reject) => {
-    //         this.loader.load(
-    //             modelPath,
-    //             (gltf) => {
-    //                 this.model = gltf.scene;
-    //                 this.animations  = gltf.animations;
-
-    //                 this.scene.add(this.model);
-    //                 this.mixer = new THREE.AnimationMixer(this.model);
-
-    //                 this.animations.forEach((clip) => {
-    //                     const action = this.mixer.clipAction(clip);
-    //                     action.play();  
-    //                     // action.setLoop(THREE.LoopRepeat, Infinity); // Set loop if needed
-    //                     action.setLoop(THREE.LoopOnce, 1); // Set loop if needed
-    //                     action.clampWhenFinished = true;
-    //                 });
-
-    //                 console.log('Model loaded successfully.');
-                    
-    //                 resolve();
-    //             },
-    //             undefined,
-    //             (error) => {
-    //                 console.error('Error loading model:', error);
-    //                 reject(error);
-    //             }
-    //         );
-    //     });
-    // }
-
-    //animation mixer update in order to run animation -> it runs in scene
-    update(deltaTime){
-        if(this.mixer){
+    update(deltaTime) {
+        if (this.mixer) {
             this.mixer.update(deltaTime);
         }
     }
 
+    playAnimation(playAnimationName, stopAnimationName = null) {
+        if (!this.mixer || this.animations.length === 0) {
+            console.warn('No animations available.');
+            return;
+        }
+    
+        // Stop the specified animation if a stopAnimationName is provided
+        if (stopAnimationName) {
+            const stopClip = this.animations.find((clip) => clip.name === stopAnimationName);
+            if (stopClip) {
+                const stopAction = this.mixer.existingAction(stopClip);
+                if (stopAction) {
+                    stopAction.stop();
+                    // console.log(`Stopped animation: ${stopAnimationName}`);
+                }
+            } else {
+                console.warn(`Animation "${stopAnimationName}" not found to stop.`);
+            }
+        }
+    
+        // Find the animation to play
+        const playClip = this.animations.find((clip) => clip.name === playAnimationName);
+        if (!playClip) {
+            console.warn(`Animation "${playAnimationName}" not found.`);
+            return;
+        }
+    
+        // Play the specified animation
+        const playAction = this.mixer.clipAction(playClip);
+        if (playAction) {
+            // Ensure the action is properly reset
+            playAction.reset();
+            playAction.setLoop(THREE.LoopOnce); // Play only once
+            playAction.clampWhenFinished = true; // Freeze on the last frame
+            playAction.play();
+    
+            // console.log(`Playing animation: ${playAnimationName}`);
+            
+        }
+    }
+     
     addAnnotation(name, position, textureUrl, width = 0.5, height = 0.5) {
         const spriteMaterial = new THREE.SpriteMaterial({
             map: new THREE.TextureLoader().load(textureUrl),
@@ -240,4 +212,27 @@ export class ModelLoader {
             console.warn('No annotation found for ' + name);
         }
     }
+
+    meshDetection(meshName, callback) {
+        window.addEventListener('click', (event) => {
+            this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+            this.raycaster.setFromCamera(this.mouse, this.camera);
+    
+            if (this.model) {
+                const intersects = this.raycaster.intersectObjects(this.model.children, true);
+    
+                if (intersects.length > 0) {
+                    const clickedMesh = intersects[0].object;
+    
+                    if (clickedMesh.name === meshName) {
+                        console.log(`Clicked mesh: ${clickedMesh.name}`);
+                        if (callback) callback(); // Trigger callback if provided
+                    }
+                }
+            }
+        });
+    }
+
 }
