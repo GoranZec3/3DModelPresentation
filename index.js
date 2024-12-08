@@ -73,15 +73,17 @@ mainScene.modelLoader.triggerInteraction('jarInBox', ()=>{
     
     setTimeout(()=>{
         mainScene.modelLoader.playAnimation('JarGoDownAnimation','JarGoUpAnimation');
-        mainScene.updateCameraTarget(0,0,0);
+        
     }, 100);
     mainScene.modelLoader.setAnnotationVisibility('jarInBox', false);
     setTimeout(()=>{
         mainScene.modelLoader.setAnnotationVisibility('close', true);
+        
 
     }, 2200);
     
     setTimeout(()=>{
+        mainScene.updateCameraTarget(0,0,0);
         mainScene.creamProxy.show();
         mainScene.creamProxy.setOpacityPulse(true);
     }, 2400);
