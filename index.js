@@ -83,12 +83,11 @@ mainScene.modelLoader.triggerInteraction('jarInBox', ()=>{
     setTimeout(()=>{
         mainScene.creamProxy.show();
         mainScene.creamProxy.setOpacityPulse(true);
+        mainScene.updateCameraTarget(0,0,0);
     }, 2400);
 
 
 });
-
-
 
 
 
