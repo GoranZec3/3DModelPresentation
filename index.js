@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { Scene } from './scene.js';
-import { proxyCreator } from './proxyCreator.js';
 
 const hdriPath = '/hdri/empty_warehouse_01_1k.hdr';
 const modelPath = '/model/cardboard_and_cream_anim03.glb';
@@ -74,6 +73,7 @@ mainScene.modelLoader.triggerInteraction('jarInBox', ()=>{
     
     setTimeout(()=>{
         mainScene.modelLoader.playAnimation('JarGoDownAnimation','JarGoUpAnimation');
+        mainScene.updateCameraTarget(0,0,0);
     }, 100);
     mainScene.modelLoader.setAnnotationVisibility('jarInBox', false);
     setTimeout(()=>{
