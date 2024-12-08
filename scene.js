@@ -4,6 +4,7 @@ import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { ModelLoader } from './model.js'; 
 import { proxyCreator } from './proxyCreator.js';
 
+
 export  class Scene{
     constructor(canvas, hdriPath, modelPath){
 
