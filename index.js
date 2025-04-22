@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Scene } from './scene.js';
 
 const hdriPath = '/hdri/empty_warehouse_01_1k.hdr';
-const modelPath = '/model/cardboard_and_cream_anim04.glb';
+const modelPath = '/model/cardboard_and_cream_anim08.glb';
 const canvas = document.getElementById('canvas');
 const mainScene = new Scene(canvas, hdriPath, modelPath);
 mainScene.modelLoader.addAnnotation('open', new THREE.Vector3(0, 1.5, 0), '/icon/unboxing.png');
